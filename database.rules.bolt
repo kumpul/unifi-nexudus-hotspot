@@ -5,10 +5,15 @@
 path /admins/{uid} is Boolean;
 
 path /vouchers {
-  index() { ["code", "expiresAt"] }
-  path /{key} is Voucher {
-    read() { isAdmin() }
-    write() { isAdmin() }
+  read() { isAdmin() }
+  write() { isAdmin() }
+  path /invalid {
+    index() { ["code", "expiresAt"] }
+    path /{key} is Voucher;
+  }
+  path /valid {
+    index() { ["code", "expiresAt"] }
+    path /{key} is Voucher;
   }
 }
 
@@ -16,7 +21,6 @@ path /vouchers {
 // MODELS
 
 type Voucher {
-  isUsedUp: Boolean|Null,
   isPrinted: Boolean|Null,
   code: String,
   createdAt: Number,
