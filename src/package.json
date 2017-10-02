@@ -12,7 +12,7 @@
     "postinstall": "npm run build",
     "watch": "tsc -w -p .",
     "build": "tsc -p .",
-    "firebase-serve": "tsc -p . && DEBUG=unifi-nexudus-hotspot:* firebase serve --only functions,hosting"
+    "start": "tsc -p . && firebase serve --only functions,hosting"
   },
   "dependencies": {
     "@oddbit/nexudus": "^0.1.1",
@@ -21,8 +21,8 @@
     "cookie-parser": "^1.4.3",
     "debug": "~2.6.3",
     "express": "~4.15.2",
-    "firebase-admin": "~4.2.1",
-    "firebase-functions": "^0.5.9",
+    "firebase-admin": "^5.3.0",
+    "firebase-functions": "^0.6.3",
     "morgan": "~1.8.1",
     "pug": "^2.0.0-rc.4",
     "request": "^2.81.0",
