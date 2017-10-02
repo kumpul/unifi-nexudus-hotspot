@@ -5,8 +5,7 @@ node_js:
   - "6.11"
 
 cache:
-  - node_modules
-  - src/node_modules
+  - functions/node_modules
 
 branches:
   only:
@@ -18,24 +17,24 @@ before_install:
   - npm install -g typescript@^2.x
 
 install:
-  - cd src
+  - cd functions
   - npm install
   - cd ..
 
 after_install:
-  - tsc -p ./src
+  - tsc -p ./functions
 
 before_script:
   - firebase use $FIREBASE_PROJECT --token $FIREBASE_DEPLOY_KEY
 
 script:
-  # Set UNIFI related variables  
+  # Set UNIFI related variables
   - firebase functions:config:set unifi.username=$UNIFI_USERNAME --token $FIREBASE_DEPLOY_KEY
   - firebase functions:config:set unifi.password=$UNIFI_PASSWORD --token $FIREBASE_DEPLOY_KEY
   - firebase functions:config:set unifi.host=$UNIFI_HOST --token $FIREBASE_DEPLOY_KEY
   - firebase functions:config:set unifi.port=$UNIFI_PORT --token $FIREBASE_DEPLOY_KEY
-  - firebase functions:config:set unifi.use_ssl=$UNIFI_USE_SSL --token $FIREBASE_DEPLOY_KEY 
-  - firebase functions:config:set unifi.is_selfsigned=$UNIFI_SSL_SELF_SIGNED --token $FIREBASE_DEPLOY_KEY 
+  - firebase functions:config:set unifi.use_ssl=$UNIFI_USE_SSL --token $FIREBASE_DEPLOY_KEY
+  - firebase functions:config:set unifi.is_selfsigned=$UNIFI_SSL_SELF_SIGNED --token $FIREBASE_DEPLOY_KEY
   - firebase functions:config:set unifi.redirect_url=$DEFAULT_REDIRECT_URL --token $FIREBASE_DEPLOY_KEY
 
   # Set Nexudus related variables

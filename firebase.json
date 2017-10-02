@@ -3,7 +3,7 @@
     "rules": "database.rules.json"
   },
   "functions": {
-    "source": "src"
+    "source": "functions"
   },
   "hosting": {
     "public": "public",
