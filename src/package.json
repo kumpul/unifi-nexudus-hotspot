@@ -12,7 +12,8 @@
     "postinstall": "npm run build",
     "watch": "tsc -w -p .",
     "build": "tsc -p .",
-    "start": "tsc -p . && firebase serve --only functions,hosting"
+    "start": "npm run build && firebase serve --only functions,hosting",
+    "df": "npm run build && firebase deploy --only functions"
   },
   "dependencies": {
     "@oddbit/nexudus": "^0.1.1",
