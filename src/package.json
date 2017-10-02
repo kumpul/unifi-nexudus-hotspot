@@ -12,8 +12,6 @@
     "postinstall": "npm run build",
     "watch": "tsc -w -p .",
     "build": "tsc -p .",
-    "start": "tsc -p . && NODE_ENV=production node ./server.js",
-    "debug": "tsc -p . && NODE_ENV=development DEBUG=unifi-nexudus-hotspot:* node ./server.js",
     "firebase-serve": "tsc -p . && DEBUG=unifi-nexudus-hotspot:* firebase serve --only functions,hosting"
   },
   "dependencies": {
