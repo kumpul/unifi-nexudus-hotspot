@@ -6,7 +6,7 @@
     "source": "src"
   },
   "hosting": {
-    "public": "src/public",
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
