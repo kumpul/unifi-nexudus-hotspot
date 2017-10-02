@@ -19,3 +19,4 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 export const expressApp = functions.https.onRequest(app);
+export * from "./database";
