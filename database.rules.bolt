@@ -7,11 +7,13 @@ path /admins/{uid} is Boolean;
 path /vouchers {
   read() { isAdmin() }
   write() { isAdmin() }
-  path /invalid {
-    index() { ["code", "expiresAt"] }
+
+  path /available {
+    index() { ["code", "createdAt"] }
     path /{key} is Voucher;
   }
-  path /valid {
+
+  path /archive {
     index() { ["code", "expiresAt"] }
     path /{key} is Voucher;
   }
