@@ -13,15 +13,15 @@ router.post("/", async (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
     const sitename = req.body.sitename;
-    let redirectUrl = req.body.url || app.hotspot.get("redirect_url");
+    let redirectUrl = req.body.url || app.getRedirectUrl();
 
     if (req.body.url === "http://connectivitycheck.gstatic.com/generate_204") {
-        redirectUrl = app.hotspot.get("redirect_url");
+        redirectUrl = app.getRedirectUrl();;
     }
 
     // Check with Nexudus if the provided email/password is an active member
     let nexudusCoworker;
-    const nxPublicApi = new nx.PublicApiClient(app.hotspot.get('nexudus_space_name'), email, password);
+    const nxPublicApi = new nx.PublicApiClient(app.getNexudusName(), email, password);
 
     try {
         nexudusCoworker = await nxPublicApi.getCoworker();
@@ -41,12 +41,12 @@ router.post("/", async (req, res, next) => {
     }
 
     // Activate MAC at hotspot
-    const apiAdminUser = app.hotspot.get('unifi_username');
-    const apiAdminPassword = app.hotspot.get('unifi_password');
+    const apiAdminUser = app.getUnifiUser();
+    const apiAdminPassword = app.getUnifiPassword();
 
     const unifiController = new unifi.UnifiController({
-        host: app.hotspot.get("unifi_host"),
-        isSelfSigned: true,
+        host: app.getUnifiHost(),
+        isSelfSigned: app.isUnifiSelfSigned(),
         siteName: sitename
     });
 
