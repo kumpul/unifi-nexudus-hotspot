@@ -1,10 +1,9 @@
 import * as debug from "debug"
-const debugLog = debug("unifi-nexudus-hotspot:router:errors");
 
 export const error = (err, req, res, next) => {
-  debugLog("Error object: " + JSON.stringify(err, null, 2));
+  console.log("Error object: " + JSON.stringify(err, null, 2));
   if (res.headersSent) {
-    debugLog("Headers already sent. Continue request ...")
+    console.log("Headers already sent. Continue request ...")
     return next(err)
   }
 

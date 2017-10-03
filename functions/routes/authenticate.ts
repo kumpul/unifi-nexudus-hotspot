@@ -2,14 +2,11 @@ import * as express from "express";
 import * as rp from "request-promise";
 import * as unifi from "@oddbit/unifi";
 import * as nx from "@oddbit/nexudus";
-import * as debug from "debug"
 import * as app from "../app";
-
-const debugLog = debug("unifi-nexudus-hotspot:router:authenticate");
 
 export const router = express.Router();
 router.post("/", async (req, res, next) => {
-    debugLog(JSON.stringify(req.body, null, 2));
+    console.log(JSON.stringify(req.body, null, 2));
 
     const mac = req.body.mac;
     const ap = req.body.ap;
@@ -29,7 +26,7 @@ router.post("/", async (req, res, next) => {
     try {
         nexudusCoworker = await nxPublicApi.getCoworker();
     } catch (err) {
-        debugLog("Error object: " + JSON.stringify(err, null, 2));
+        console.log("Error object: " + JSON.stringify(err, null, 2));
         console.error(`Could not connect to Nexudus: ${err.message}`);
         return next({
             message: err.message,
@@ -55,13 +52,13 @@ router.post("/", async (req, res, next) => {
 
     let authorizedClientResponse;
     try {
-        debugLog(`Logging in ${apiAdminUser} at UniFi guest portal ...`);
+        console.log(`Logging in ${apiAdminUser} at UniFi guest portal ...`);
         await unifiController.login(apiAdminUser, apiAdminPassword);
 
-        debugLog(`Authorizing device "${mac}" at access point "${ap}"...`);
+        console.log(`Authorizing device "${mac}" at access point "${ap}"...`);
         authorizedClientResponse = await unifiController.authorizeGuest(mac, ap);
     } catch (err) {
-        debugLog("Error object: " + JSON.stringify(err, null, 2));
+        console.log("Error object: " + JSON.stringify(err, null, 2));
         console.error(`Could not activate MAC '${mac}' at the hotspot: ${err.message}`);
         return next({
             message: err.message,
@@ -70,7 +67,7 @@ router.post("/", async (req, res, next) => {
     }
 
     // Let the client off the hook here.
-    debugLog(`All done. Redirecting the client to: ${redirectUrl}`);
+    console.log(`All done. Redirecting the client to: ${redirectUrl}`);
     res.redirect(302, redirectUrl);
 
     const macTuples = authorizedClientResponse.mac.split();
@@ -79,7 +76,7 @@ router.post("/", async (req, res, next) => {
     // Finally close the shop
     // The logout response likes to throw a HTTP 302 "error". So we'll catch it and ignore it.
     try {
-        debugLog(`Logging out api user "${apiAdminUser}" from controller ...`);
+        console.log(`Logging out api user "${apiAdminUser}" from controller ...`);
         await unifiController.logout();
     } catch (err) {
         if (err.statusCode >= 400) {
