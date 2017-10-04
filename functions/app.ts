@@ -1,6 +1,7 @@
 import * as functions from "firebase-functions";
 
 import * as express from "express";
+import * as expressLayouts from 'express-ejs-layouts';
 import * as path from "path";
 import * as favicon from "serve-favicon";
 import * as logger from "morgan";
@@ -20,7 +21,8 @@ hotspot.use(cookieParser());
 
 // view engine setup
 hotspot.set('views', path.join(__dirname, 'views'));
-hotspot.set('view engine', 'pug');
+hotspot.set('view engine', 'ejs');
+hotspot.use(expressLayouts);
 
 hotspot.use("/guest/s", index.router);
 hotspot.use("/authenticate", authenticate.router);
